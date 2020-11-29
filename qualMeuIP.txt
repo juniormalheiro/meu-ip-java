@@ -1,0 +1,205 @@
+package br.com.am.main;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+//import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+import java.awt.Color;
+import java.awt.Toolkit;
+import java.awt.event.ActionListener;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.awt.event.ActionEvent;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+
+public class TelaMeuIP {
+
+	private JFrame frmAMJunior;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					TelaMeuIP window = new TelaMeuIP();
+					window.frmAMJunior.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public TelaMeuIP() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 * @throws UnknownHostException 
+	 */
+	private void initialize(){
+		frmAMJunior = new JFrame();
+		frmAMJunior.setIconImage(Toolkit.getDefaultToolkit().getImage(TelaMeuIP.class.getResource("/br/com/amjunior/ti/Imagens/icon_amjunior.GIF")));
+		frmAMJunior.setForeground(Color.LIGHT_GRAY);
+		frmAMJunior.setResizable(false);
+		frmAMJunior.setTitle("GRUPO SUPORTE - TI");
+		frmAMJunior.setBounds(100, 100, 536, 278);
+		frmAMJunior.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmAMJunior.getContentPane().setLayout(null);
+
+		JButton btnMeuIp = new JButton("MEU IP");
+
+		btnMeuIp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try{
+					//Para pegar o nome da placa de rede.
+					InetAddress localhost = Inet4Address.getLocalHost();
+					NetworkInterface networkInterface = NetworkInterface.getByInetAddress(localhost);
+
+					//As linhas abaixo "System.out.println" s?o apenas para log.
+					System.out.println("Nome da m?quina: "+ InetAddress.getLocalHost().getHostName());
+					System.out.println("Nome do usu?rio: " + System.getProperty("user.name"));
+					System.out.println("Ip da m?quina  : " + InetAddress.getLocalHost().getHostAddress() + "\n");
+					System.out.println("Placa: " + networkInterface.getDisplayName());
+
+					//Preenxendo os valores nos textfieds.
+					textField.setText(InetAddress.getLocalHost().getHostName());
+					textField_1.setText(InetAddress.getLocalHost().getHostAddress());
+					textField_2.setText(networkInterface.getDisplayName());
+					textField_3.setText(System.getProperty("user.name"));
+
+				} catch(UnknownHostException e){
+					e.printStackTrace();
+				} catch (SocketException e) {
+					// Trata-se do objeto: networkInterface
+					e.printStackTrace();
+				}
+			}
+		});
+
+		btnMeuIp.setBounds(152, 194, 91, 23);
+		frmAMJunior.getContentPane().add(btnMeuIp);
+
+		JLabel lblNewLabel = new JLabel("Qual meu IP ?");
+		lblNewLabel.setForeground(new Color(65, 105, 225));
+		lblNewLabel.setBackground(Color.BLACK);
+		lblNewLabel.setFont(new Font("Swis721 Hv BT", Font.PLAIN, 18));
+		lblNewLabel.setBounds(195, 11, 152, 48);
+		frmAMJunior.getContentPane().add(lblNewLabel);
+
+		textField = new JTextField();
+		textField.setFont(new Font("Tahoma", Font.BOLD, 11));
+		textField.setEditable(false);
+		textField.setBounds(111, 70, 144, 20);
+		frmAMJunior.getContentPane().add(textField);
+		textField.setColumns(10);
+
+		textField_1 = new JTextField();
+		textField_1.setForeground(Color.RED);
+		textField_1.setFont(new Font("Tahoma", Font.BOLD, 11));
+		textField_1.setEditable(false);
+		textField_1.setColumns(10);
+		textField_1.setBounds(111, 101, 144, 20);
+		frmAMJunior.getContentPane().add(textField_1);
+
+		JLabel lblIpDaMquina = new JLabel("Nome da m\u00E1quina: ");
+		lblIpDaMquina.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblIpDaMquina.setBounds(10, 73, 97, 14);
+		frmAMJunior.getContentPane().add(lblIpDaMquina);
+
+		JLabel lblNomeDaMquina = new JLabel("IP da m\u00E1quina: ");
+		lblNomeDaMquina.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblNomeDaMquina.setBounds(10, 102, 91, 14);
+		frmAMJunior.getContentPane().add(lblNomeDaMquina);
+
+		JLabel lblPlacaDeRede = new JLabel("Placa de rede:");
+		lblPlacaDeRede.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblPlacaDeRede.setBounds(10, 138, 91, 14);
+		frmAMJunior.getContentPane().add(lblPlacaDeRede);
+
+		textField_2 = new JTextField();
+		textField_2.setFont(new Font("Tahoma", Font.BOLD, 11));
+		textField_2.setEditable(false);
+		textField_2.setColumns(10);
+		textField_2.setBounds(111, 135, 409, 20);
+		frmAMJunior.getContentPane().add(textField_2);
+
+		JLabel lblNomeDeUsurio = new JLabel("Nome de usu\u00E1rio:");
+		lblNomeDeUsurio.setBounds(261, 73, 103, 14);
+		frmAMJunior.getContentPane().add(lblNomeDeUsurio);
+
+		textField_3 = new JTextField();
+		textField_3.setFont(new Font("Tahoma", Font.BOLD, 11));
+		textField_3.setEditable(false);
+		textField_3.setColumns(10);
+		textField_3.setBounds(368, 70, 152, 20);
+		frmAMJunior.getContentPane().add(textField_3);
+
+		//-----------------------------------------------//
+
+		//Limpar os campos
+		JButton btnTeste = new JButton("LIMPAR");
+		btnTeste.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				textField.setText("");
+				textField_1.setText("");
+				textField_2.setText("");
+				textField_3.setText("");
+				System.out.println("Valores limpos.");
+			}
+		});
+
+		btnTeste.setBounds(346, 194, 91, 23);
+		frmAMJunior.getContentPane().add(btnTeste);
+
+		//Desenvolvedor
+		JLabel lblDesenvolvidorPorTi = new JLabel("Desenvolvido por Sebastian Junior");
+		lblDesenvolvidorPorTi.setBounds(10, 227, 269, 14);
+		frmAMJunior.getContentPane().add(lblDesenvolvidorPorTi);
+
+		//Vers?o do sistema
+		JLabel lblVerso = new JLabel("vers\u00E3o: 1.2");
+		lblVerso.setHorizontalAlignment(SwingConstants.CENTER);
+		lblVerso.setBounds(436, 227, 84, 14);
+		frmAMJunior.getContentPane().add(lblVerso);
+
+		//Data
+		Date date = new Date();
+		JLabel lblData = new JLabel("data");
+		lblData.setHorizontalAlignment(SwingConstants.CENTER);
+		lblData.setBounds(292, 227, 72, 14);
+		lblData.setText(new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis())));
+		frmAMJunior.getContentPane().add(lblData);
+
+		//Hora
+		JLabel lblHora = new JLabel("hora");
+		lblHora.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHora.setBounds(375, 228, 62, 14);
+		lblHora.setText(new SimpleDateFormat("hh:mm:ss").format(new Date(System.currentTimeMillis())));
+		frmAMJunior.getContentPane().add(lblHora);
+		
+	}
+	
+}
