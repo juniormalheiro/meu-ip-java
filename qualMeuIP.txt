@@ -1,3 +1,4 @@
+//Projeto desenvolvido para facilitar a identificacao do deu IP para ser repassado a equipe de suporte.
 package br.com.am.main;
 
 import java.awt.EventQueue;
